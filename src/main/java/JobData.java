@@ -52,7 +52,10 @@ public class JobData {
         loadData();
 
         // Bonus mission; normal version returns allJobs
-        return new ArrayList<>(allJobs);
+        //return new ArrayList<>(allJobs);
+        ArrayList<HashMap<String, String>> newList = new ArrayList<>(allJobs);
+        return newList;
+
     }
 
     /**
@@ -81,8 +84,14 @@ public class JobData {
                 jobs.add(row);
             }
         }
-        //sort the jobs alphabetically
-        //Collections.sort(jobs);
+        //sort the jobs alphabetically with respect to given column name's value
+        Collections.sort(jobs, new Comparator<HashMap<String, String>>() {
+            @Override
+            public int compare(HashMap<String, String> map1, HashMap<String, String> map2) {
+                return map1.get(column).compareTo(map2.get(column));
+            }
+        });
+
         return jobs;
     }
 
